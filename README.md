@@ -18,9 +18,11 @@
 
 Проект использует Git Submodules. Ссылки ниже ведут в соответствующие подрепозитории:
 
-- 📂 [**backend**](./backend) — Серверная часть на NestJS + Prisma ORM.
-- 📂 [**frontend-form**](./frontend-form) — Клиентская часть для сбора фидбека (Vite + TS).
-- 📂 [**frontend-table**](./frontend-table) — Панель визуализации данных (Vite + TS + React + Tanstack + Zustand).
+- 📂 **backend** — Серверная часть (NestJS + Prisma) [**Open on GitHub**](https://github.com/ddanyo/backend-feedback)
+
+- 📂 **frontend-form** — Клиентская часть для сбора фидбека (Vite + TS) [**Open on GitHub**](https://github.com/ddanyo/frontend-feedback-form)
+
+- 📂 **frontend-table** — Панель визуализации данных (Vite + TS + React) [**Open on GitHub**](https://github.com/ddanyo/frontend-feedback-table)
 - 📄 `docker-compose.yml` — Конфигурация для оркестрации всей системы.
 
 ## Архитектурная философия (Architecture & Philosophy)
@@ -185,10 +187,18 @@ cd frontend-form && npm ci
 cd frontend-table && npm ci
 ```
 
-**4. Для микросервиса `backend` также нужно настроить `.env`, как в предыдущем способе запуска**
+**4. Настраиваем микросервис `backend`**
+
+Для данного микросервиса нужно настроить `.env`, как в предыдущем способе запуска
 
 ```bash
 cd backend && cp .env.example .env
+```
+
+А также сгенерировать `Prisma Client` на основе `schema.prisma` чтобы подключаться к бд:
+
+```bash
+npx prisma generate
 ```
 
 **5. Запуск сервисов**
