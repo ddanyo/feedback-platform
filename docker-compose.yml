@@ -1,5 +1,5 @@
 services:
-  postgres:
+  db:
     image: postgres:17-alpine
     container_name: fs-postgres
     restart: always
@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5433:5432"
+      - "${DB_EXTERNAL_PORT}:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
       - ./backend-go/test-data/dump.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -22,15 +22,20 @@ services:
 
   backend:
     container_name: fs-backend-go
+    image: fs-backend-go-image
     build:
       context: ./backend-go
       dockerfile: Dockerfile
     restart: always
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     environment:
-      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@fs-postgres:5432/${DB_NAME}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     networks:
       - feedback-system-network
 
@@ -58,7 +63,7 @@ services:
     ports:
       - "2510:80"
     volumes:
-      - ./backend-go/nginx/proxy.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./backend-go/proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - backend
       - front-form
