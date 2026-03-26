@@ -53,7 +53,7 @@ flowchart TD
 
     %% Структура (Подграфы)
     subgraph MS ["Microservices"]
-        Gateway -- "/api/ или /api/swagger" --> BE
+        Gateway -- "/api/ или /api/swagger/index.html" --> BE
         Gateway -- "/send" --> FF
         Gateway -- "/" --> FT
     end
@@ -201,12 +201,12 @@ _(При работе над одним сервисом остальные ча
 
 Вся система доступна на одном порту **2510** благодаря прокси-серверу (Nginx), который физически запускается внутри контейнера Backend-сервиса, обеспечивая единую точку входа.
 
-| Компонент          | Путь (URL)                                                             | Описание                              |
-| :----------------- | :--------------------------------------------------------------------- | :------------------------------------ |
-| **Frontend Table** | [http://localhost:2510/](http://localhost:2510/)                       | Главная страница - таблица с отзывами |
-| **Frontend Form**  | [http://localhost:2510/send](http://localhost:2510/send)               | Форма отправки обратной связи         |
-| **Backend API**    | [http://localhost:2510/api](http://localhost:2510/api)                 | Точка входа для API запросов          |
-| **Swagger UI**     | [http://localhost:2510/api/swagger](http://localhost:2510/api/swagger) | Документация методов API              |
+| Компонент          | Путь (URL)                                                                                   | Описание                              |
+| :----------------- | :------------------------------------------------------------------------------------------- | :------------------------------------ |
+| **Frontend Table** | [http://localhost:2510/](http://localhost:2510/)                                             | Главная страница - таблица с отзывами |
+| **Frontend Form**  | [http://localhost:2510/send](http://localhost:2510/send)                                     | Форма отправки обратной связи         |
+| **Backend API**    | [http://localhost:2510/api](http://localhost:2510/api)                                       | Точка входа для API запросов          |
+| **Swagger UI**     | [http://localhost:2510/api/swagger/index.html](http://localhost:2510/api/swagger/index.html) | Документация методов API              |
 
 ## 🛠️ Памятка разработчику (Development Workflow)
 
