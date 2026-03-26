@@ -6,8 +6,7 @@
 ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![TanStack](https://img.shields.io/badge/TanStack-242424?style=for-the-badge&logo=tanstack&logoColor=white)
-![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge)
-![Prisma](https://img.shields.io/badge/Prisma-1A202C?style=for-the-badge&logo=prisma&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma7-1A202C?style=for-the-badge&logo=prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ## Обзор проекта (Overview)
@@ -35,19 +34,11 @@
 
 ## Инженерный стенд / Особенности фронтенда (Tech Showcase)
 
-Микросервис `frontend-table` — это не просто таблица, а полноценный **инженерный sandbox**. Он предназначен для демонстрации и сравнительного анализа различных стратегий обработки данных на клиенте.
-
-В пользовательском интерфейсе реализованы переключатели, позволяющие "на лету" изменять архитектурные подходы:
-
 - **Управление состоянием (State Management):**
   - _Server-side fetching_: Классическая пагинация с запросами к API на каждую страницу.
-  - _Client-side store_: Единоразовая загрузка массива данных в **Zustand** с последующей локальной фильтрацией и выдачей.
 - **Методы отображения:**
   - _Classic Pagination_: Традиционное разбиение на страницы.
   - _Infinite Scroll_: Динамическая подгрузка данных при скролле.
-- **Рендеринг и виртуализация:**
-  - _Native vs TanStack_: Сравнение производительности чистой React-таблицы против оптимизированной логики **TanStack Table**.
-  - _Virtualization_: Использование **TanStack Virtual** для рендеринга только видимых строк.
 
 ## Схема Архитектуры (Architecture Diagram)
 
@@ -87,7 +78,7 @@ flowchart TD
 
 ## База данных и Тестовые данные (Database & Seeding)
 
-В проекте используется **PostgreSQL**. Для быстрого старта и тестирования производительности в папке `backend/test-data/` подготовлен файл `dump.sql`.
+В проекте используется **PostgreSQL**. Для подключения к бд в docker-контейнере наружу прокинут порт `5433` (чтобы исключить конфликты со стандартным `5432`). Для быстрого старта и тестирования производительности в папке `backend/test-data/` подготовлен файл `dump.sql`.
 
 - **Автоматизация**: При первом запуске Docker-контейнера база данных автоматически подхватывает дамп и выполняет инициализацию. Ручное наполнение не требуется.
 
@@ -200,6 +191,8 @@ cd backend && cp .env.example .env
 ```bash
 npx prisma generate
 ```
+
+> **Зачем выполнять `npx prisma generate`:** Эта команда генерирует Prisma Client — типизированный клиент для работы с базой данных. Генерация создаёт TypeScript-типы на основе вашей схемы (`schema.prisma`), что обеспечивает автодополнение в IDE и проверку типов на этапе компиляции. Команду нужно запускать после каждого изменения схемы базы данных.
 
 **5. Запуск сервисов**
 
