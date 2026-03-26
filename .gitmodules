@@ -4,6 +4,6 @@
 [submodule "frontend-table"]
 	path = frontend-table
 	url = git@github.com:ddanyo/frontend-feedback-table.git
-[submodule "backend"]
-	path = backend
-	url = git@github.com:ddanyo/backend-feedback.git
+[submodule "backend-go"]
+	path = backend-go
+	url = https://github.com/ddanyo/backend-feedback-go.git

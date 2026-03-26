@@ -3,10 +3,9 @@
 ![Status](https://img.shields.io/badge/status-Beta-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-2D3748?style=for-the-badge&logo=react&logoColor=61DAFB)
-![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![TanStack](https://img.shields.io/badge/TanStack-242424?style=for-the-badge&logo=tanstack&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma7-1A202C?style=for-the-badge&logo=prisma&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ## Обзор проекта (Overview)
@@ -17,7 +16,7 @@
 
 Проект использует Git Submodules. Ссылки ниже ведут в соответствующие подрепозитории:
 
-- 📂 **backend** — Серверная часть (NestJS + Prisma) [**Open on GitHub**](https://github.com/ddanyo/backend-feedback)
+- 📂 **backend-go** — Серверная часть (Go + Gin) [**Open on GitHub**](https://github.com/ddanyo/backend-feedback-go)
 
 - 📂 **frontend-form** — Клиентская часть для сбора фидбека (Vite + TS) [**Open on GitHub**](https://github.com/ddanyo/frontend-feedback-form)
 
@@ -60,7 +59,7 @@ flowchart TD
     end
 
     subgraph ST ["Storage"]
-        BE -- "Prisma ORM" --> DB
+        BE --> DB
     end
 
     %% Внешняя связь
@@ -136,7 +135,7 @@ docker compose up -d --build
  ✔ Container fs-table                  Started
  ✔ Container fs-postgres               Healthy
  ✔ Container fs-form                   Started
- ✔ Container fs-backend                Started
+ ✔ Container fs-backend-go             Started
  ✔ Container fs-proxy                  Started
 ```
 
@@ -167,10 +166,6 @@ cd feedback-platform
 Используем `npm ci`, чтобы гарантировать идентичность версий из lock-файлов
 
 ```bash
-cd backend && npm ci
-```
-
-```bash
 cd frontend-form && npm ci
 ```
 
@@ -178,26 +173,18 @@ cd frontend-form && npm ci
 cd frontend-table && npm ci
 ```
 
-**4. Настраиваем микросервис `backend`**
+**4. Настраиваем микросервис `backend-go`**
 
 Для данного микросервиса нужно настроить `.env`, как в предыдущем способе запуска
 
 ```bash
-cd backend && cp .env.example .env
+cd backend-go && cp .env.example .env
 ```
-
-А также сгенерировать `Prisma Client` на основе `schema.prisma` чтобы подключаться к бд:
-
-```bash
-npx prisma generate
-```
-
-> **Зачем выполнять `npx prisma generate`:** Эта команда генерирует Prisma Client — типизированный клиент для работы с базой данных. Генерация создаёт TypeScript-типы на основе вашей схемы (`schema.prisma`), что обеспечивает автодополнение в IDE и проверку типов на этапе компиляции. Команду нужно запускать после каждого изменения схемы базы данных.
 
 **5. Запуск сервисов**
 
 ```bash
-cd backend && docker compose up -d --build
+cd backend-go && docker compose up -d --build
 ```
 
 ```bash
